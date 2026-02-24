@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalExpenseEl = document.getElementById("total-expense");
     const balanceEl = document.getElementById("balance");
     const ctx = document.getElementById("financeChart")?.getContext("2d");
-let financeChart;
+    let financeChart;
 
     let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
@@ -33,8 +33,9 @@ let financeChart;
 
         transactions.forEach((t, index) => {
 
-            if (t.type === "income") income += t.amount;
-            else expense += t.amount;
+            const amt = Number(t.amount);
+if (t.type === "income") income += amt;
+else expense += amt;
 
             const li = document.createElement("li");
             li.className = "list-group-item d-flex justify-content-between align-items-center";
@@ -42,11 +43,11 @@ let financeChart;
             li.innerHTML = `
     <div>
         <strong>${t.description}</strong><br>
-        <small class="text-muted">${t.date}</small>
+        <small class="text-muted">${t.date || ""}</small>
     </div>
     <div>
         <span class="${t.type === "income" ? "text-success" : "text-danger"}">
-            ₹ ${t.amount}
+            ₹ ${amt.toLocaleString()}
         </span>
         <button class="btn btn-sm btn-danger ms-3">X</button>
     </div>
@@ -59,9 +60,9 @@ let financeChart;
             transactionList.appendChild(li);
         });
 
-        totalIncomeEl.textContent = income;
-        totalExpenseEl.textContent = expense;
-        balanceEl.textContent = income - expense;
+        totalIncomeEl.textContent = income.toLocaleString();
+        totalExpenseEl.textContent = expense.toLocaleString();
+        balanceEl.textContent = (income - expense).toLocaleString();
         if (!ctx) return;
         if (financeChart) {
             financeChart.destroy();
@@ -92,7 +93,7 @@ let financeChart;
         const description = descriptionInput.value.trim();
         const amount = parseFloat(amountInput.value);
         const type = typeSelect.value;
-        const date = dateInput.valu;
+        const date = dateInput.value;
 
         if (!description || isNaN(amount) || amount <= 0 || !date) {
             alert("Enter valid details");
@@ -106,7 +107,8 @@ let financeChart;
 
         descriptionInput.value = "";
         amountInput.value = "";
-        dateInput.value ="";
+        dateInput.value = "";
+        typeSelect.value = "income";
     }
 
     function deleteTransaction(index) {
@@ -115,7 +117,9 @@ let financeChart;
         updateUI();
     }
 
+    if (addBtn) {
     addBtn.addEventListener("click", addTransaction);
+}
 
     updateUI();
 });
