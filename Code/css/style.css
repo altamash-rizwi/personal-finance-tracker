@@ -1,0 +1,19 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0F172A;
+    color: #F1F5F9;
+}
+
+.hero-section {
+    height: 90vh;
+    background: linear-gradient(135deg, #0F172A, #1E293B);
+}
+
+.btn-success {
+    background-color: #22C55E;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #16A34A;
+}
