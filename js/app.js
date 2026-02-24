@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const descriptionInput = document.getElementById("description");
     const amountInput = document.getElementById("amount");
     const typeSelect = document.getElementById("type");
+    const dateInput = document.getElementById("date");
     const addBtn = document.getElementById("add-btn");
     const transactionList = document.getElementById("transaction-list");
 
@@ -39,14 +40,17 @@ let financeChart;
             li.className = "list-group-item d-flex justify-content-between align-items-center";
 
             li.innerHTML = `
-                <span>${t.description}</span>
-                <div>
-                    <span class="${t.type === "income" ? "text-success" : "text-danger"}">
-                        ₹ ${t.amount}
-                    </span>
-                    <button class="btn btn-sm btn-danger ms-3">X</button>
-                </div>
-            `;
+    <div>
+        <strong>${t.description}</strong><br>
+        <small class="text-muted">${t.date}</small>
+    </div>
+    <div>
+        <span class="${t.type === "income" ? "text-success" : "text-danger"}">
+            ₹ ${t.amount}
+        </span>
+        <button class="btn btn-sm btn-danger ms-3">X</button>
+    </div>
+`;
 
             li.querySelector("button").addEventListener("click", function () {
                 deleteTransaction(index);
@@ -88,19 +92,21 @@ let financeChart;
         const description = descriptionInput.value.trim();
         const amount = parseFloat(amountInput.value);
         const type = typeSelect.value;
+        const date = dateInput.valu;
 
-        if (!description || isNaN(amount) || amount <= 0) {
+        if (!description || isNaN(amount) || amount <= 0 || !date) {
             alert("Enter valid details");
             return;
         }
 
-        transactions.push({ description, amount, type });
+        transactions.push({ description, amount, type, date });
 
         saveToLocalStorage();
         updateUI();
 
         descriptionInput.value = "";
         amountInput.value = "";
+        dateInput.value ="";
     }
 
     function deleteTransaction(index) {
