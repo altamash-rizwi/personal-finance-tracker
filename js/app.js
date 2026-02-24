@@ -73,8 +73,9 @@ let financeChart;
                 }]
             },
             options: {
-                responsive: true,
-                plugins: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
                     legend: {
                         position: "bottom"
                     }

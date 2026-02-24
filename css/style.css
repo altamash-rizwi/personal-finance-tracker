@@ -17,3 +17,6 @@ body {
 .btn-success:hover {
     background-color: #16A34A;
 }
+#financeChart {
+    height: 280px !important;
+}
